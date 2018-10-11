@@ -38,9 +38,33 @@ USE_TZ = True
 # ------------------------------------------------------------------------------
 # https://docs.djangoproject.com/en/dev/ref/settings/#databases
 
+#DATABASES = {
+#    'default': env.db('DATABASE_URL', default='postgres:///nomadgram'),
+#}
+import pymysql
+
+pymysql.install_as_MySQLdb()
+
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='postgres:///nomadgram'),
+
+    'default': {
+
+        'ENGINE': 'django.db.backends.mysql',
+
+        'NAME': 'nomadgram',
+
+        'USER': 'nomadgram',
+
+        'PASSWORD': 'nomadgram20!8',
+
+        'HOST': 'hellojw.net',
+
+        'PORT': '3306',
+
+    },
+
 }
+
 DATABASES['default']['ATOMIC_REQUESTS'] = True
 
 # URLS
@@ -71,6 +95,7 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'nomadgram.users.apps.UsersAppConfig',
+    'nomadgram.images.apps.ImagesConfig'
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
