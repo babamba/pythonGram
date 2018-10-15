@@ -50,19 +50,10 @@ DATABASES = {
     'default': {
 
         'ENGINE': 'django.db.backends.mysql',
-
-        'NAME': 'nomadgram',
-
-        'USER': 'nomadgram',
-
-        'PASSWORD': 'nomadgram20!8',
-
-        'HOST': 'hellojw.net',
-
-        'PORT': '3306',
-
-    },
-
+        'OPTIONS': {
+            'read_default_file': "./mysql.cnf"
+        }
+    }
 }
 
 DATABASES['default']['ATOMIC_REQUESTS'] = True
