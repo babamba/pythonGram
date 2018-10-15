@@ -45,4 +45,4 @@ class Like(TimeStampedModel):
     image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
 
     def  __str__(self):
-        return 'User : {} - Image Caption : {}'.format(self.creator.username, self.image.caption)
+        return 'User : {} - Image Caption :{}'.format(self.creator.username, self.image.caption)
