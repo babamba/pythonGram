@@ -16,7 +16,6 @@ class TimeStampedModel(models.Model):
 class Image(TimeStampedModel):
 
     # 이미지 모델 ( 타임스탬프 클래스 상속 )
-
     file = models.ImageField()
     location = models.CharField(max_length=140)
     caption = models.TextField()
@@ -32,7 +31,7 @@ class Comment(TimeStampedModel):
 
     message = models.TextField()
     creator = models.ForeignKey(user_models.User, on_delete=models.CASCADE, null=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True,)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True, related_name='comments')
 
     def  __str__(self):
         return self.message
@@ -42,7 +41,7 @@ class Like(TimeStampedModel):
     # 좋아요 ( relationship) 모델 ( 타임스탬프 클래스 상속 )
 
     creator = models.ForeignKey(user_models.User, on_delete=models.CASCADE, null=True)
-    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True)
+    image = models.ForeignKey(Image, on_delete=models.CASCADE, null=True, related_name='likes')
 
     def  __str__(self):
         return 'User : {} - Image Caption :{}'.format(self.creator.username, self.image.caption)
