@@ -15,6 +15,11 @@ class ImageAdmin(admin.ModelAdmin):
         'caption',
     )
 
+    list_filter = (
+        'location' ,
+        'creator',
+    )
+
     list_display = (
         'file',
         'location' ,
