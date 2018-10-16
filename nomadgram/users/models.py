@@ -4,6 +4,9 @@ from django.db import models
 from django.urls import reverse
 from django.utils.translation import ugettext_lazy as _
 
+# 디비 컬럼이라고 생각하면 됨. 스프링에서는 VO
+# 컬럼을 추가할때 makemigrations 및 migrate 실행 해줘야 추가된 컬럼이 활성
+
 
 class User(AbstractUser):
 

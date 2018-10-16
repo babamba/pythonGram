@@ -1,6 +1,11 @@
 from django.urls import path
 from . import views
 
+# 스프링에서 requestMapping 어노테이션과 비슷
+# app_name 은 큰 카테고리 역할
+# 그이후 urlPatterns 안의 path들을 통해 요청url에 맞는 걸 찾아 url에 할당 된 view를 실행한다.
+# requestParam 처럼 요청에 담긴 인수들을 통해 처리도 가능
+
 # from nomadgram.users.views import (
 #     user_list_view,
 #     user_redirect_view,
@@ -33,7 +38,8 @@ app_name = "images"
 
 urlpatterns = [
     path("feed/", view=views.Feed.as_view(), name="feed"),
-    path("<int:image_id>/like/", view=views.LikeImage.as_view(), name="like_image")
+    path("<int:image_id>/like/", view=views.LikeImage.as_view(), name="like_image"),
+    path("<int:image_id>/comment/", view=views.CommentOnImage.as_view(), name="comment_image")
 ]
 
 # 장고 업데이트로 인한 url path의 정규식사용

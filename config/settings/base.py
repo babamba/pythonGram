@@ -43,6 +43,7 @@ USE_TZ = True
 #}
 import pymysql
 
+# mysql 커넥터 임포트 처리 
 pymysql.install_as_MySQLdb()
 
 DATABASES = {
@@ -51,7 +52,7 @@ DATABASES = {
 
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'read_default_file': "./mysql.cnf"
+            'read_default_file': "./nomadgram/mysql.cnf"
         }
     }
 }

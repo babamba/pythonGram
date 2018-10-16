@@ -6,7 +6,7 @@ from nomadgram.users.forms import UserChangeForm, UserCreationForm
 
 User = get_user_model()
 
-
+# model 컬럼 추가시 여기서도 추가 해줘야 함 
 @admin.register(User)
 class UserAdmin(auth_admin.UserAdmin):
 
