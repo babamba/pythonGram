@@ -17,7 +17,8 @@ class User(AbstractUser):
 
     # First Name and Last Name do not cover name patterns
     # around the globe.
-    name = CharField(_("Name of User"), blank=True, max_length=255)
+    profile_image = models.ImageField(null=True)
+    name = models.CharField(_("Name of User"), blank=True, max_length=255)
     website = models.URLField(null=True)
     bio = models.TextField(null=True)
     phone = models.CharField(max_length=140, null=True)
@@ -27,8 +28,8 @@ class User(AbstractUser):
     # 하는데 B의 프로필을 보면 같은 팔로잉이 되어있는 상황  symmetrical=False,  related_name="user"
     # 이와같이 해결해야하는 것 같음. 
     
-    followers = models.ManyToManyField("self")
-    following = models.ManyToManyField("self")
+    followers = models.ManyToManyField("self", blank=True, symmetrical=False, related_name="user_followers")
+    following = models.ManyToManyField("self", blank=True, symmetrical=False, related_name="user_following")
 
     def get_absolute_url(self):
         return reverse("users:detail", kwargs={"username": self.username})
