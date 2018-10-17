@@ -89,7 +89,8 @@ THIRD_PARTY_APPS = [
 ]
 LOCAL_APPS = [
     'nomadgram.users.apps.UsersAppConfig',
-    'nomadgram.images.apps.ImagesConfig'
+    'nomadgram.images.apps.ImagesConfig',
+    'nomadgram.notifications.apps.NotificationsConfig'
     # Your stuff: custom apps go here
 ]
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
