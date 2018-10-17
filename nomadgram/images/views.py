@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models, serializers
 
+
 # Create your views here.
 # urls.py를 통해 요청 된 urlpatterns 에 할당 되어 있는 url이 요청되면 각 url에 할당된 view가 실행 
 # 스프링에서는 Controller의 requestMapping 각각의 내부 실행 메서드라고 보면 쉬울 듯
@@ -136,3 +137,31 @@ class Comment(APIView):
 
         except models.Comment.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class Search(APIView):
+    def get(self, request, format=None):
+
+        hashtags = request.query_params.get('hashtags', None)
+
+        if hashtags is not None :
+
+            hashtags = hashtags.split(",")
+
+            print(hashtags)
+
+            # tags__name__in = deep relation ship 
+            images = models.Image.objects.filter(tags__name__in=hashtags).distinct()
+            print(images)
+
+            serializer = serializers.CountImageSerializer(images, many=True)
+
+            return Response(data=serializer.data , status=status.HTTP_200_OK)
+        
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
+
+        # 포함된 글자를 검색할때는 creator__username__contain= 
+        # 정확하게 검색할때는 creator__username__exact
+        # icontain / iexact 는 대소문자 구분없이 
+        # models.Image.objects.filter(creator__username='jw')

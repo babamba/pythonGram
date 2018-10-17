@@ -4,6 +4,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models, serializers
 
+# class 기반 뷰 - http request 를 위한 모든 method 를 class 안에 넣음
 class UserProfile(APIView):
     def get(self, request, username, format=None):
         try:
@@ -61,13 +62,6 @@ class FollowUser(APIView):
 
         return Response(status=status.HTTP_200_OK)
 
-# class UserFollowing(APIView):
-#     def get(self, request, username, format=None):
-#         try :
-#             found_user = models.User.objects.get(username=username)
-#         except models.User.DoesNotExist:
-#             return Response(status=status.HTTP_404_NOT_FOUND)
-
 # 팔로워 리스트 
 class UserFollowers(APIView):
     def get(self, request, username, format=None):
@@ -89,10 +83,29 @@ class UserFollowing(APIView):
         except models.User.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
-        user_followers = found_user.following.all()
-        serializer = serializers.ListUserSerializer(user_followers, many=True)
+        user_following = found_user.following.all()
+        serializer = serializers.ListUserSerializer(user_following, many=True)
 
         return Response(data=serializer.data, status=status.HTTP_200_OK )
+
+
+
+class Search(APIView):
+    def get(self, request, format=None):
+
+        username = request.query_params.get('username', None)
+
+        if username is not None :
+
+            users = models.User.objects.filter(username__istartswith=username)
+
+            serializer = serializers.ListUserSerializer(users, many=True)
+
+            return Response(data=serializer.data , status=status.HTTP_200_OK)
+        
+        else : 
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
         # --------------------------------------------------------------------------------
 

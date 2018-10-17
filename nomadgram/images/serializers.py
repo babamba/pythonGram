@@ -1,10 +1,13 @@
 from rest_framework import serializers
 from . import models
 from nomadgram.users import models as user_model
+from taggit_serializer.serializers import (TagListSerializerField,
+                                           TaggitSerializer)
 
 # 시러얼라이즈는 Json to Python 또는 Python to Json 형태를 유지시켜주기 위해 사용
 # rest_framework에 내장된 기능
 # 클래스를 지정해주고 각각에 해당하는 시리얼라이즈에 request.data를 인수로 실행하여 가공처리 
+tags = TagListSerializerField()
 
 class FeedUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -33,7 +36,7 @@ class LikeSerializer(serializers.ModelSerializer):
         model = models.Like
         fields = '__all__'
 
-class ImageSerializer(serializers.ModelSerializer):
+class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     comments = CommentSerializer(many=True)
     creator = FeedUserSerializer()
@@ -47,11 +50,12 @@ class ImageSerializer(serializers.ModelSerializer):
                     'caption',
                     'comments',
                     'like_count',
-                    'creator'
+                    'creator',
+                    'tags'
                 )
 
 
-class UserProfileImageSerializer(serializers.ModelSerializer):
+class CountImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Image
         fields = (

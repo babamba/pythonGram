@@ -1,5 +1,6 @@
 from django.db import models
 from nomadgram.users import models as user_models
+from taggit.managers import TaggableManager
 
 # Create your models here.
 # 디비 컬럼이라고 생각하면 됨. 스프링에서는 VO
@@ -24,7 +25,7 @@ class Image(TimeStampedModel):
     location = models.CharField(max_length=140)
     caption = models.TextField()
     creator = models.ForeignKey(user_models.User, on_delete=models.CASCADE, null=True, related_name='images')
-
+    tags = TaggableManager()
 
     @property
     def like_count(self):
