@@ -7,7 +7,7 @@ from nomadgram.images import serializers as images_serializers
 # rest_framework에 내장된 기능
 # 클래스를 지정해주고 각각에 해당하는 시리얼라이즈에 request.data를 인수로 실행하여 가공처리 
 
-class ExploreUserSerializer(serializers.ModelSerializer):
+class ListUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user_model.User
         fields = (
