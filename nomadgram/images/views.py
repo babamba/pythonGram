@@ -26,6 +26,11 @@ class Feed(APIView):
             for image in user_images:
                 image_list.append(image)
 
+        my_images = user.images.all()[:2]
+
+        for image in my_images:
+            image_list.append(image)
+
         sorted_list = sorted(image_list, key=lambda image : image.created_at, reverse=True)
         serializer = serializers.ImageSerializer(sorted_list, many=True)
 
@@ -159,3 +164,34 @@ class Search(APIView):
         # 정확하게 검색할때는 creator__username__exact
         # icontain / iexact 는 대소문자 구분없이 
         # models.Image.objects.filter(creator__username='jw')
+
+# images/4/moderateComments/5
+class moderateComments(APIView):
+    def delete(self, request, image_id, comment_id, format=None):
+        user = request.user
+
+        # try:
+        #     image = models.Image.objects.get(id=image_id, creator=user)
+        # except models.Image.DoesNotExist : 
+        #     return Response(status==status.HTTP_404_NOT_FOUND)
+            
+        try:
+            comment_to_delete = models.Comment.objects.get(id = comment_id, image__id = image_id, image__creator = user)
+            comment_to_delete.delete()
+        except models.Comment.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+class ImageDetail(APIView):
+    def get(self, request, image_id, format=None):
+
+        user = request.user
+
+        try:
+            image = models.Image.objects.get(id=image_id)
+        except models.Image.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = serializers.ImageSerializer(image)
+        return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
