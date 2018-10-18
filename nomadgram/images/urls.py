@@ -38,11 +38,11 @@ app_name = "images"
 
 urlpatterns = [
     # 피드 보기 (사진 리스트)
-    path("feed/", view=views.Feed.as_view(), name="feed"),
+    path("", view=views.Images.as_view(), name="feed"),
 
     # 이미지 상세
     path("<int:image_id>/", view=views.ImageDetail.as_view(), name="image_detail"),
-    
+
     # 이미지 좋아요
     path("<int:image_id>/likes/", view=views.LikeImage.as_view(), name="like_image"),
 

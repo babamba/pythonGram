@@ -12,7 +12,7 @@ from nomadgram.users import models as user_model
 # urls.py를 통해 요청 된 urlpatterns 에 할당 되어 있는 url이 요청되면 각 url에 할당된 view가 실행 
 # 스프링에서는 Controller의 requestMapping 각각의 내부 실행 메서드라고 보면 쉬울 듯
 
-class Feed(APIView):
+class Images(APIView):
     def get(self, request, format=None):
 
         user = request.user
@@ -37,6 +37,20 @@ class Feed(APIView):
         serializer = serializers.ImageSerializer(sorted_list, many=True)
 
         return Response(serializer.data)
+
+    def post(self, request, format=None):
+
+        user = request.user
+
+        serializer = serializers.InputImagaeSerializer(data=request.data)
+
+        if serializer.is_valid():
+            serializer.save(creator=user)
+            return Response(data=serializer.data, status = status.HTTP_201_CREATED)
+        else:
+            return Response(data=serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+
+        
 
 
 def get_key(image):
