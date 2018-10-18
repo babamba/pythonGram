@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models, serializers
+from nomadgram.notifications import views as notification_views
 
 # class 기반 뷰 - http request 를 위한 모든 method 를 class 안에 넣음
 class UserProfile(APIView):
@@ -59,6 +60,10 @@ class FollowUser(APIView):
 
         # 대상의 follower에 해당 유저 추가 
         user_to_follow.followers.add(user)
+
+
+        # 팔로잉 상태창 위한 함수 
+        notification_views.create_notification(user, user_to_follow, 'follow')
 
         return Response(status=status.HTTP_200_OK)
 

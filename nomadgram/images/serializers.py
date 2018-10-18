@@ -7,7 +7,13 @@ from taggit_serializer.serializers import (TagListSerializerField,
 # 시러얼라이즈는 Json to Python 또는 Python to Json 형태를 유지시켜주기 위해 사용
 # rest_framework에 내장된 기능
 # 클래스를 지정해주고 각각에 해당하는 시리얼라이즈에 request.data를 인수로 실행하여 가공처리 
-tags = TagListSerializerField()
+
+class SmallImageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Image
+        fields = (
+            'file',
+        )
 
 class FeedUserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -36,10 +42,11 @@ class LikeSerializer(serializers.ModelSerializer):
         model = models.Like
         fields = '__all__'
 
-class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
+class ImageSerializer(serializers.ModelSerializer, TaggitSerializer):
 
     comments = CommentSerializer(many=True)
     creator = FeedUserSerializer()
+    tags = TagListSerializerField()
 
     class Meta:
         model = models.Image
@@ -51,9 +58,9 @@ class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
                     'comments',
                     'like_count',
                     'creator',
-                    'tags'
+                    'tags',
+                    'created_at'
                 )
-
 
 class CountImageSerializer(serializers.ModelSerializer):
     class Meta:

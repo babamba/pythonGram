@@ -3,6 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models, serializers
+from nomadgram.notifications import views as notification_views
 
 
 # Create your views here.
@@ -55,8 +56,8 @@ class LikeImage(APIView):
                 image= found_image
             )
             print("exist_like & delete - name : " , user , " / image : " , found_image )
-            # preexisting_like.delete()
 
+            # 이전에 좋아요한 오브젝트 발견하면 수정하지않음
             return Response(status=status.HTTP_304_NOT_MODIFIED)
         # 위에서 try가 실행되고 try가 실패했을때 save 처리 
         except models.Like.DoesNotExist:
@@ -66,36 +67,27 @@ class LikeImage(APIView):
                 creator = user,
                 image = found_image
             )
+
             print("new_like & save - name : " , user , " / image : " , found_image )
+            # 이전에 좋아요 하지않음 오브젝트 발견하면 수정
             new_like.save()
+
+            notification_views.create_notification(user, found_image.creator, 'like', found_image)
 
         return Response(status=status.HTTP_201_CREATED)
 
 class UnLikeImage(APIView):
-
-    def delete(self, request, format=None):
-        user = request.user
-
-        # 요청에 같이 넘어온 request의 image_id값으로 이미지 모델의 해당 아이디에 해당하는 이미지있는지 try 있으면 try / catch 빠져나감
-        try:
-            found_image = models.Image.objects.get(id=image_id)
-
-        # except처리되는 순간 밑에 있는 구문 실행 안함
-        except models.Image.DoesNotExist:
-                return Response(status=status.HTTP_404_NOT_FOUND)
-
-        try:
-            preexisting_like = models.Like.objects.get(
-                creator = user,
-                image= found_image
+     def delete(self, request, image_id, format=None):
+         user = request.user
+         try:
+            preexisiting_like = models.Like.objects.get(
+                creator=user,
+                image__id=image_id
             )
-            print("un like")
-            preexisting_like.delete()
+            preexisiting_like.delete()
             return Response(status=status.HTTP_204_NO_CONTENT)
-
-        except models.Like.DoesNotExist:
-            return Response(status=status.HTTP_304_NOT_MODIFIED)
-
+         except models.Like.DoesNotExist:
+             return Response(status=status.HTTP_304_NOT_MODIFIED)
 
 class CommentOnImage(APIView):
 
@@ -117,6 +109,8 @@ class CommentOnImage(APIView):
         # 시리얼라이즈가 처리되었을때 db에 creator 컬럼에 요청 user아이디값 넣어주고 insert 처리
         if serializer.is_valid():
             serializer.save(creator=user, image=found_image)
+
+            notification_views.create_notification(user, found_image.creator, 'comment', found_image, serializer.data['message'])
 
             return Response(data=serializer.data, status=status.HTTP_201_CREATED)
         
