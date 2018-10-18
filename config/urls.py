@@ -17,7 +17,14 @@ urlpatterns = [
     # Django Admin, use {% url 'admin:index' %}
     path(settings.ADMIN_URL, admin.site.urls),
     # jwt
-    path("api-token-auth/", obtain_jwt_token),
+    # path("api-token-auth/", obtain_jwt_token),
+
+    # ADD rest auth
+    path("rest-auth/", include('rest_auth.urls')),
+
+    # ADD rest_auth.registration
+    path("rest-auth/registration/", include('rest_auth.registration.urls')),
+
     # User management
     path(
         "users/",
