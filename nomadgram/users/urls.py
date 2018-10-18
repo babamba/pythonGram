@@ -23,7 +23,10 @@ urlpatterns = [
     # 유저명으로 유저 검색
     path("search/", view=views.Search.as_view(), name="search"),
 
-    # 유저 프로파일 
+    # 대상유저 프로파일 
     path("<username>/", view=views.UserProfile.as_view(), name="user_profile"),
+
+    # 비밀번호 변경
+    path("<username>/password/", view=views.ChangePassword.as_view(), name="password"),
     
 ]

@@ -42,6 +42,16 @@ class LikeSerializer(serializers.ModelSerializer):
         model = models.Like
         fields = '__all__'
 
+class InputImagaeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = models.Image
+        fields = (
+            'file',
+            'location',
+            'caption',
+        )
+
 class ImageSerializer(serializers.ModelSerializer, TaggitSerializer):
 
     comments = CommentSerializer(many=True)

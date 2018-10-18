@@ -20,6 +20,10 @@ class ListUserSerializer(serializers.ModelSerializer):
 class UserProfileSerializer(serializers.ModelSerializer):
 
     images = images_serializers.CountImageSerializer(many=True)
+    # ReadOnlyField 는 ㅎ당 필드들을 수정하지않는다.
+    post_count = serializers.ReadOnlyField()
+    followers_count = serializers.ReadOnlyField()
+    following_count = serializers.ReadOnlyField()
 
     class Meta:
         model = user_model.User

@@ -7,15 +7,45 @@ from nomadgram.notifications import views as notification_views
 
 # class 기반 뷰 - http request 를 위한 모든 method 를 class 안에 넣음
 class UserProfile(APIView):
-    def get(self, request, username, format=None):
+
+    def get_user(self, username):
         try:
             found_user = models.User.objects.get(username=username)
-            serializer = serializers.UserProfileSerializer(found_user)
-            return Response(data=serializer.data, status=status.HTTP_200_OK)
-
-            print(found_user)
+            return found_user
         except models.User.DoesNotExist :
+            return None
+
+    def get(self, request, username, format=None):
+        
+        found_user = self.get_user(username)
+
+        if found_user is None :
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+        serializer = serializers.UserProfileSerializer(found_user)
+
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+    def put(self, request, username, format=None):
+
+        user = request.user
+
+        found_user = self.get_user(username)
+
+        if found_user is None :
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+
+        elif found_user.username != user.username :
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        else :
+            serializer = serializers.UserProfileSerializer(found_user, data=request.data, partial=True)
+            
+            if serializer.is_valid():
+                serializer.save()
+                return Response(data=serializer.data, status=status.HTTP_200_OK)
+            else : 
+                return Response(data=serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 class ExploreUsers(APIView):
     def get(self, request, format=None):
@@ -110,6 +140,40 @@ class Search(APIView):
         
         else : 
             return Response(status=status.HTTP_400_BAD_REQUEST)
+
+
+class ChangePassword(APIView):
+    def put(self, request, username, format=None):
+        user = request.user
+        
+        if user.username == username :
+            current_password = request.data.get('current_password', None)
+        
+            # {"current_password": "test1234", "new_password": "test12345"}
+            # 현재 비밀번호 정보가 없지 않다면 
+            if current_password is not None :
+                # 장고 user 모델 기능 를 이용해 넘어온 비밀번호와 디비 비밀번호와 비교
+                passwords_match = user.check_password(current_password)
+                # 비밀번호 비교가 true이면
+                if passwords_match :
+                    # 새로운 비밀번호 정보값
+                    new_password = request.data.get('new_password', None)
+
+                    # 새 비밀번호 정보가 없지 않다면 
+                    if new_password is not None : 
+                        # 장고 user 모델 기능 이용해 디비 비밀번호를 새로운 비밀번호로 변경 
+                        user.set_password(new_password)
+                        # 마무리 세이브
+                        user.save()
+                        return Response(status=status.HTTP_200_OK)
+                    else:
+                        return Response(status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    return Response(status=status.HTTP_400_BAD_REQUEST)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        else:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 
         # --------------------------------------------------------------------------------

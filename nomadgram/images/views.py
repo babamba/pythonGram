@@ -3,7 +3,9 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models, serializers
+from nomadgram.users import serializers as user_serializers
 from nomadgram.notifications import views as notification_views
+from nomadgram.users import models as user_model
 
 
 # Create your views here.
@@ -42,6 +44,24 @@ def get_key(image):
 
 
 class LikeImage(APIView):
+
+    def get(self, request, image_id, format=None):
+        likes = models.Like.objects.filter(image__id = image_id)
+
+        # 1. 해당글의 likes 인원 조회
+        print(likes)
+
+        # 2. 좋아요를 만든 유저들의 리스트를 생성 
+        print(likes.values('creator_id'))
+        like_creator_ids = likes.values('creator_id')
+
+        # 3. 유저 모델에서 해당 유저리스트의 유저 정보를 조회
+        users = user_model.User.objects.filter(id__in = like_creator_ids)
+
+        serializer = user_serializers.ListUserSerializer(users, many=True)
+        return Response(data=serializer.data, status=status.HTTP_200_OK)
+
+        print(users)
 
     def post(self, request, image_id ,format=None):
         # 해당 views 호출한 요청자 아이디 변수 할당
@@ -184,6 +204,17 @@ class moderateComments(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 class ImageDetail(APIView):
+
+    # 함수들은 class 안에 있기때문에 self가 필요
+    def find_own_image(self, image_id, user):
+        try:
+            # 요청하는 사람이 올린 이미지인지 확인
+            image = models.Image.objects.get(id=image_id , creator = user)
+            return image
+        except models.Image.DoesNotExist:
+            return None
+
+    # 상세 정보
     def get(self, request, image_id, format=None):
 
         user = request.user
@@ -195,3 +226,33 @@ class ImageDetail(APIView):
 
         serializer = serializers.ImageSerializer(image)
         return Response(data=serializer.data, status=status.HTTP_204_NO_CONTENT)
+
+    # Update
+    def put(self, request, image_id, format=None):
+
+        user = request.user
+        image = self.find_own_image(image_id, user)
+
+        if image is not None:
+            return Response(data=serializer.data, status=status.HTTP_401_UNAUTHORIZED)
+
+        serializer = serializers.InputImagaeSerializer(image, data = request.data , partial=True) #partial=True 시리얼라이저 필드가 필수가 아니어도 되도록
+
+        if serializer.is_valid():
+            serializer.save(creator=user)
+
+            return Response(data=serializer.data , status = status.HTTP_204_NO_CONTENT)
+
+        else:
+            return Response(data=serializer.errors , status = status.HTTP_400_BAD_REQUEST)
+
+    # delete
+    def delete(self, request, image_id, format=None):
+        user = request.user
+        image = self.find_own_image(image_id, user)
+
+        if image is None:
+            return Response(status=status.HTTP_401_UNAUTHORIZED)
+        image.delete()
+
+        return Response(status=status.HTTP_204_NO_CONTENT)
