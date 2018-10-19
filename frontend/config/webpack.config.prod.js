@@ -84,6 +84,10 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
         sourceMap: shouldUseSourceMap,
       },
     },
+    {
+      loader: require.resolve('sass-loader'),
+      options: cssOptions,
+    },
   ];
   if (preProcessor) {
     loaders.push({
@@ -340,7 +344,9 @@ module.exports = {
             exclude: cssModuleRegex,
             loader: getStyleLoaders({
               importLoaders: 1,
+              modules: true,
               sourceMap: shouldUseSourceMap,
+              getLocalIdent: getCSSModuleLocalIdent,
             }),
             // Don't consider CSS imports dead code even if the
             // containing package claims to have no side effects.
@@ -354,7 +360,6 @@ module.exports = {
             test: cssModuleRegex,
             loader: getStyleLoaders({
               importLoaders: 1,
-              sourceMap: shouldUseSourceMap,
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
             }),
@@ -370,7 +375,9 @@ module.exports = {
             loader: getStyleLoaders(
               {
                 importLoaders: 2,
+                modules: true,
                 sourceMap: shouldUseSourceMap,
+                getLocalIdent: getCSSModuleLocalIdent,
               },
               'sass-loader'
             ),

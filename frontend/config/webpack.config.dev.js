@@ -273,7 +273,6 @@ module.exports = {
             exclude: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
-              modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
@@ -283,6 +282,7 @@ module.exports = {
             test: cssModuleRegex,
             use: getStyleLoaders({
               importLoaders: 1,
+              modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
             }),
           },
@@ -303,7 +303,7 @@ module.exports = {
             use: getStyleLoaders(
               {
                 importLoaders: 2,
-                modules: false,
+                modules: true,
                 sourceMap:true,
                 getLocalIdent: getCSSModuleLocalIdent,
               },
