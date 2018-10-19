@@ -4,6 +4,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from . import models, serializers
 from nomadgram.notifications import views as notification_views
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from rest_auth.registration.views import SocialLoginView
 
 # class 기반 뷰 - http request 를 위한 모든 method 를 class 안에 넣음
 class UserProfile(APIView):
@@ -175,6 +177,8 @@ class ChangePassword(APIView):
         else:
             return Response(status=status.HTTP_401_UNAUTHORIZED)
 
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
 
         # --------------------------------------------------------------------------------
 

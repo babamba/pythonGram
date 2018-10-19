@@ -84,6 +84,8 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook', # face social login
+    'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.kakao',
     'rest_framework', # REST framework
     'rest_framework.authtoken',
     'taggit', # tags for the photos
@@ -280,3 +282,4 @@ REST_FRAMEWORK = {
 # rest auth jwt 활성화 
 REST_USE_JWT = True
 ACCOUNT_LOGOUT_ON_GET = True
+SOCIALACCOUNT_QUERY_EMAIL = True

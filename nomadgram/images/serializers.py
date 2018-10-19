@@ -43,6 +43,9 @@ class LikeSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class InputImagaeSerializer(serializers.ModelSerializer):
+    
+    # 필수가 아니어도 되도록 시리얼라이저에서 변경 가능한 방법
+    # file = serializers.FileField(required=False)
 
     class Meta:
         model = models.Image
