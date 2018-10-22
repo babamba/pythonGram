@@ -362,6 +362,7 @@ module.exports = {
               importLoaders: 1,
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
+              camelCase:"dashes",
             }),
           },
           // Opt-in support for SASS. The logic here is somewhat similar

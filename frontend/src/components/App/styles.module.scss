@@ -1,0 +1,8 @@
+@import "~reset-css/reset.css";
+@import "../../config/_variables.module.scss";
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700");
+
+body {
+    background-color: $bg-color;
+    font-size: -apple-system, BlinkMacSystemFont,"segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}

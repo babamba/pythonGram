@@ -2,8 +2,10 @@ import { createStore, combineReducers , applyMiddleware} from "redux";
 import thunk from 'redux-thunk';
 import { routerReducer, routerMiddleware} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import { i18nState } from "redux-i18n";
 import users from 'redux/modules/users';
-import Reactotron from "ReactotronConfig"
+// import Reactotron from "ReactotronConfig"
 
 // 이렇게 import 해도 작동은 하지만 dev 모드에서만 작동시키고 싶기때문에 
 // process 를통해 dev모드 일때 require 시킨다.
@@ -28,14 +30,18 @@ if(env === "development"){
 }
 
 // 리듀서에도 라우트리듀서 추가 
+// state 의 리듀서들 
 const reducer = combineReducers({
     users,
-    routing: routerReducer
+    routing: routerReducer,
+    // 언어 설정을 다른언어로 할수 있게
+    i18nState
 })
 let store;
 
 if(env === "development"){
-    store = initialState => Reactotron.createStore(reducer, applyMiddleware(...middlewares));
+    //store = initialState => Reactotron.createStore(reducer, composeWithDevTools(applyMiddleware(...middlewares)));
+    store = initialState => createStore(reducer, composeWithDevTools(applyMiddleware(...middlewares)));
 }else{
                                                 // list of function array를 unpack 
                                                 // 요로케하면 배열일경우 value값을 보내준다 

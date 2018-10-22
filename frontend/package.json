@@ -50,7 +50,9 @@
     "react-router-redux": "^5.0.0-alpha.9",
     "reactotron-react-js": "^2.1.1",
     "redux": "^4.0.1",
+    "redux-i18n": "^1.5.14",
     "redux-thunk": "^2.3.0",
+    "reset-css": "^4.0.1",
     "resolve": "1.8.1",
     "sass-loader": "7.1.0",
     "style-loader": "0.23.0",
@@ -81,6 +83,7 @@
   },
   "devDependencies": {
     "reactotron-redux": "^2.1.0",
+    "redux-devtools-extension": "^2.13.5",
     "redux-logger": "^3.0.6"
   }
 }
