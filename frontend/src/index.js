@@ -1,17 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import store from 'redux/configureStore';
+import { ConnectedRouter } from "react-router-redux";
+import store, { history } from 'redux/configureStore';
 import 'index.css';
 import App from 'App';
+import "ReactotronConfig"
 
-console.log(store.getState())
-
+// 라우터에게 히스토리 오브젝트를 전달
+// 그래서 router , middleware 둘다 같은 동일한 히스토리 오브젝트를 갖게됨
 ReactDOM.render(
     <Provider store = { store }>
-        <App />
+
+        <ConnectedRouter history= { history } >
+            <App />
+        </ConnectedRouter>
     </Provider>,
-     document.getElementById('root'));
+     document.getElementById('root')
+);
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
