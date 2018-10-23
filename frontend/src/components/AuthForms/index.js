@@ -12,14 +12,12 @@ export const LoginForm = (props, context) => (
         </form>
         <span className={styles.divider}>{context.t("or")}</span>
             <span className={styles.facebookLink}>
-            <Ionicon icon="logo-facebook" fontSize="20px" color="#385185" />{context.t("Log in")}
-            {context.t("with Facebook")}
+            <Ionicon icon="logo-facebook" fontSize="20px" color="#385185" />{context.t("Log in with Facebook")}
         </span>
         <span className={styles.forgotLink}>{context.t("Forgot password?")}</span>
     </div>
   );
 
-  
 
    export const SignupForm = (props, context) => (
     <div className={styles.formComponent}>
