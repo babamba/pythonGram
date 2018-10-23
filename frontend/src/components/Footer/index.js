@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import styles from './styles.module.scss';
 
 const Footer = (props, context)  => (
@@ -6,17 +7,17 @@ const Footer = (props, context)  => (
         <div className={styles.column}>
             <nav className={styles.nav}>
                 <ul className={styles.list}>
-                    <li className={styles.listItem}>ABOUT US</li>
-                    <li className={styles.listItem}>SUPPORT</li>
-                    <li className={styles.listItem}>PRESS</li>
-                    <li className={styles.listItem}>API</li>
-                    <li className={styles.listItem}>JOBS</li>
-                    <li className={styles.listItem}>PRIVACY</li>
-                    <li className={styles.listItem}>TERMS</li>
-                    <li className={styles.listItem}>DIRECTORY</li>
-                    <li className={styles.listItem}>PROFILES</li>
-                    <li className={styles.listItem}>HASHTAGS</li>
-                    <li className={styles.listItem}>LANGUAGE</li>
+                    <li className={styles.listItem}>{context.t("ABOUT US")}</li>
+                    <li className={styles.listItem}>{context.t("SUPPORT")}</li>
+                    <li className={styles.listItem}>{context.t("PRESS")}</li>
+                    <li className={styles.listItem}>{context.t("API")}</li>
+                    <li className={styles.listItem}>{context.t("JOBS")}</li>
+                    <li className={styles.listItem}>{context.t("PRIVACY")}</li>
+                    <li className={styles.listItem}>{context.t("TERMS")}</li>
+                    <li className={styles.listItem}>{context.t("DIRECTORY")}</li>
+                    <li className={styles.listItem}>{context.t("PROFILES")}</li>
+                    <li className={styles.listItem}>{context.t("HASHTAGS")}</li>
+                    <li className={styles.listItem}>{context.t("LANGUAGE")}</li>
                 </ul>
             </nav>
         </div>
@@ -25,5 +26,9 @@ const Footer = (props, context)  => (
         </div>
     </footer>
 )
+
+Footer.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default Footer;

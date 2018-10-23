@@ -1,5 +1,6 @@
 import React from "react";
 import styles from "./styles.module.scss"
+import PropTypes from "prop-types";
 import { LoginForm, SignupForm } from "components/AuthForms";
 
 
@@ -18,24 +19,24 @@ const Auth = (props, context) =>
             {/* state 액션이 로그인일때 혹은 회원가입일때  / 즉시 실행 */}
                 {props.action === "login" && 
                     ( 
-                        <p className={styles.text} >Don't have an account?{" "}
+                        <p className={styles.text} > {context.t("Don't have an account?")}{" "}
                             <span onClick={props.changeAction} 
                                 className={styles.changeLink}>
-                                    Sign up
+                                    {context.t("Sign up")}
                             </span>
                         </p>)}
                 {props.action === "signup" && (
-                        <p className={styles.text} >Have an account?{" "}
+                        <p className={styles.text} > {context.t("Have an account?")}{" "}
                             <span onClick={props.changeAction} 
                                 className={styles.changeLink}>
-                                    Log in
+                                    {context.t("Log in")}
                             </span>
                         </p>
                     )
                 }
             </div>
             <div className={styles.appBox}>
-                <span>Get the app</span>
+                <span>{context.t("Get the app")}</span>
                 <div className={styles.appstores}>
                     <img src={require("images/ios.png")}
                         alt="Download it on the Apple Appstore"
@@ -47,5 +48,10 @@ const Auth = (props, context) =>
             </div>
         </div>
     </main>
+
+
+Auth.contextTypes = {
+    t: PropTypes.func.isRequired
+};
 
 export default Auth;
