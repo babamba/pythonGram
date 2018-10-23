@@ -275,7 +275,6 @@ module.exports = {
               importLoaders: 1,
               modules: true,
               getLocalIdent: getCSSModuleLocalIdent,
-              camelCase:"dashes",
             }),
           },
           // Adds support for CSS Modules (https://github.com/css-modules/css-modules)
@@ -297,8 +296,6 @@ module.exports = {
             test: sassRegex,
             exclude: sassModuleRegex,
             use: getStyleLoaders({ importLoaders: 2 }, 'sass-loader'),
-            data:`@import "${paths.appSrc.replace(/\\/g, '/')}/config/_varialbles.scss";`,
-            
           },
           // Adds support for CSS Modules, but using SASS
           // using the extension .module.scss or .module.sass

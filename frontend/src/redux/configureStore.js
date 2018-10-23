@@ -4,7 +4,7 @@ import { routerReducer, routerMiddleware} from 'react-router-redux';
 import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { i18nState } from "redux-i18n";
-import users from 'redux/modules/users';
+import user from 'redux/modules/user';
 // import Reactotron from "ReactotronConfig"
 
 // 이렇게 import 해도 작동은 하지만 dev 모드에서만 작동시키고 싶기때문에 
@@ -32,7 +32,7 @@ if(env === "development"){
 // 리듀서에도 라우트리듀서 추가 
 // state 의 리듀서들 
 const reducer = combineReducers({
-    users,
+    user,
     routing: routerReducer,
     // 언어 설정을 다른언어로 할수 있게
     i18nState
