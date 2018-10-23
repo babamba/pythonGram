@@ -37,20 +37,16 @@ msgid "or"
 msgstr "또는"
 
 #: src/components/AuthForms/index.js
-msgid "with Facebook"
-msgstr ""
-
-#: src/components/AuthForms/index.js
 msgid "Forgot password?"
 msgstr "비밀번호를 잊으셨나요?"
 
 #: src/components/AuthForms/index.js
 msgid "Sign up to see photos and videos from your friends."
-msgstr ""
+msgstr "친구들의 사진과 비디오를 보려면 로그인하세요."
 
 #: src/components/AuthForms/index.js
 msgid "Log in with Facebook"
-msgstr "친구들의 사진과 비디오를 보려면 로그인하세요."
+msgstr "Facebook으로 로그인"
 
 #: src/components/AuthForms/index.js
 msgid "Email"
