@@ -1,5 +1,7 @@
 from rest_framework import serializers
 from rest_auth.registration.serializers import RegisterSerializer
+from allauth.account.adapter import get_adapter
+from allauth.account.utils import setup_user_email
 from . import models
 from nomadgram.users import models as user_model
 from nomadgram.images import serializers as images_serializers
@@ -43,7 +45,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
         )
 
 class SignUpSerializer(RegisterSerializer):
-    
+
     name = serializers.CharField(required=True, write_only=True)
 
     def get_cleaned_data(self):

@@ -19,10 +19,10 @@ function saveToken(token){
 
 function facebookLogin(access_token){
     return function(dispatch){
-        fetch("/users/login/facebook/" , {
+        fetch("/users/login/facebook/", {
             method : "POST",
             headers:{
-                "Content-Type" : "application/json"
+                "Content-Type": "application/json"
             },
             body : JSON.stringify({
                 //access_token: access_token
@@ -89,7 +89,7 @@ function applySetToken(state, action){
     return {
         ...state,
         isLoggedIn:true,
-        token
+        token : token
     }
 }
 

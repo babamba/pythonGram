@@ -53,9 +53,10 @@ class Container extends Component{
     }
 
     _handleFacebookLogin = response => {
-        console.log(response);
+        
         const { facebookLogin } = this.props;
-        facebookLogin(response.accessToken)
+        facebookLogin(response.accessToken);
+        console.log(response);
 
         // 여기가 받은 token을 가지고 redux / api로 보내야 할  액션이 위치해야 할 곳
     }

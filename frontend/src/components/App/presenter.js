@@ -10,7 +10,7 @@ import Auth from "components/Auth";
 // presenter 는 ui에 관련된 것을 갖고있다.
 // props 에서 데이터가 나오고 로직 없고 오직 UI만 
 // 프리젠터는 리덕스가 뭔지 모름 
-
+console.log("App Presneter");
 
 const App = props => [
   // Nav,

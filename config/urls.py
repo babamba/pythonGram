@@ -27,13 +27,11 @@ urlpatterns = [
     path("rest-auth/registration/", include('rest_auth.registration.urls')),
 
     # User management
-    path(
-        "users/",
-        include("nomadgram.users.urls", namespace="users"),
-    ),
-    path("accounts/", include("allauth.urls")),
+    path("users/", include("nomadgram.users.urls", namespace="users")),
     path("images/", include("nomadgram.images.urls", namespace="images")),
     path("notifications/", include("nomadgram.notifications.urls", namespace="notifications")),
+    path("accounts/", include("allauth.urls")),
+    
     path("", view=views.ReactAppView.as_view()),
 
     # Your stuff: custom urls includes go here

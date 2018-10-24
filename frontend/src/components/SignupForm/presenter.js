@@ -10,7 +10,7 @@ export const SignupForm = (props, context) => (
         </h3>
         <FacebookLogin 
                     appId = "719621631746451"
-                    autoLoad = {true}
+                    autoLoad = {false}
                     fields = "name,email,picture"
                     callback={props.handleFacebookLogin}
                     cssClass = {formStyles.facebookSingupLogin}

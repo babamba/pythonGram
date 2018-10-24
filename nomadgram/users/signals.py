@@ -1,7 +1,9 @@
 from allauth.account.signals import user_signed_up
 from django.dispatch import receiver
+from io import BytesIO
 from urllib.request import urlopen
-from django.core.files.base import ContentFile
+from django.core.files import File
+
 
 @receiver(user_signed_up)
 def user_signed_up(request, user, **kwargs):
@@ -12,6 +14,7 @@ def user_signed_up(request, user, **kwargs):
         user.gender = gender
         avatar = social_account.get_avatar_url()
         avatar_image = urlopen(avatar)
-        user.profile_image.save('{}.jpg'.format(uid), ContentFile(avatar_image.read()))
+        io = BytesIO(avatar_image.read())
+        user.profile_image.save('{}.jpg'.format(uid), File(io))
         user.name = user.get_full_name()
     user.save()
