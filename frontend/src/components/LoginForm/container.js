@@ -1,4 +1,5 @@
 import React , { Component }from "react";
+import PropTypes from "prop-types";
 import LoginForm from "./presenter";
 
 class Container extends Component{
@@ -7,11 +8,18 @@ class Container extends Component{
         password : ''
     }
 
+    //index 에 있는 것과 연결되서 쓸 수있게 prop 설정
+    static propTypes = {
+        facebookLogin : PropTypes.func.isRequired,
+        usernameLogin : PropTypes.func.isRequired
+    }
+
     render(){
         const {username , password } = this.state;
         return <LoginForm 
                 handleInputChange={this._handleInputChange}
                 handelSubmit={this._handelSubmit}
+                handleFacebookLogin = {this._handleFacebookLogin}
                 usernameValue={username} 
                 passwordValue={password} 
                 
@@ -35,11 +43,23 @@ class Container extends Component{
     }
 
     _handelSubmit = event => {
+        const{ usernameLogin } = this.props;
+        const{ username, password } = this.state;
         event.preventDefault();
         console.log(this.state);
-
-        // 여기가 redux 액션이 위치해야 할 곳
+        // 여기가 받은 token을 가지고 redux / api로 보내야 할  액션이 위치해야 할 곳
+        usernameLogin(username, password);
+        
     }
+
+    _handleFacebookLogin = response => {
+        console.log(response);
+        const { facebookLogin } = this.props;
+        facebookLogin(response.accessToken)
+
+        // 여기가 받은 token을 가지고 redux / api로 보내야 할  액션이 위치해야 할 곳
+    }
+
 
 } 
 

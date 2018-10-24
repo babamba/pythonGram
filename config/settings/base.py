@@ -13,6 +13,7 @@ READ_DOT_ENV_FILE = env.bool('DJANGO_READ_DOT_ENV_FILE', default=False)
 if READ_DOT_ENV_FILE:
     # OS environment variables take precedence over variables from .env
     env.read_env(str(ROOT_DIR.path('.env')))
+    
 
 # GENERAL
 # ------------------------------------------------------------------------------
@@ -76,6 +77,10 @@ DJANGO_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # 'django.contrib.humanize', # Handy template tags
+     # Useful template tags:
+    'django.contrib.humanize',
+
+    # Admin
     'django.contrib.admin',
 ]
 THIRD_PARTY_APPS = [
@@ -84,8 +89,6 @@ THIRD_PARTY_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.facebook', # face social login
-    'allauth.socialaccount.providers.google',
-    'allauth.socialaccount.providers.kakao',
     'rest_framework', # REST framework
     'rest_framework.authtoken',
     'taggit', # tags for the photos
@@ -95,7 +98,7 @@ THIRD_PARTY_APPS = [
     'corsheaders', # To accept requests from React
 ]
 LOCAL_APPS = [
-    'nomadgram.users.apps.UsersAppConfig',
+    'nomadgram.users.apps.UsersConfig',
     'nomadgram.images.apps.ImagesConfig',
     'nomadgram.notifications.apps.NotificationsConfig'
     # Your stuff: custom apps go here
@@ -284,6 +287,48 @@ REST_FRAMEWORK = {
 
 # rest auth jwt 활성화 
 REST_USE_JWT = True
+
 ACCOUNT_LOGOUT_ON_GET = True
+
 SOCIALACCOUNT_QUERY_EMAIL = True
+
 CORS_ORIGIN_ALLOW_ALL = True
+
+JWT_AUTH = {
+    'JWT_VERIFY_EXPIRATION' : False
+}
+
+SOCIALACCOUNT_PROVIDERS = {  
+    'facebook': {  
+        'SCOPE': [  
+            'email',  
+            'public_profile',  
+            'user_friends'  
+        ],  
+        'FIELDS': [  
+            'id',  
+            'email',  
+            'name',  
+            'first_name',  
+            'last_name',  
+            'verified',
+            'locale',  
+            'timezone',  
+            'link',  
+            'gender',  
+            'updated_time',
+            'picture' 
+        ],  
+        'AUTH_PARAMS': {  
+            #'auth_type': 'reauthenticate'  
+        },  
+        'METHOD': 'oauth2',  
+        #'LOCALE_FUNC': 'path.to.callable',  
+        'VERIFIED_EMAIL': True,  
+        'VERSION': 'v2.4'  
+    }
+}  
+
+REST_AUTH_REGISTER_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'nomadgram.users.serializers.SignUpSerializer'
+}
