@@ -1,0 +1,44 @@
+import React, {Component} from "react";
+import SignupForm from "./presenter";
+
+class Container extends Component {
+
+    state = {
+        email : '',
+        fullName : '',
+        username : '',
+        password: '',
+    }
+
+    render(){
+        const { email, fullName , username, password} = this.state;
+        return <SignupForm 
+                    usernameValue = {username}
+                    passwordValue = {password}
+                    emailValue = {email}
+                    fullNameValue = {fullName} 
+                    handleInputChange = {this._handleInputChange}
+                    handelSubmit = {this._handleSubmit}
+                />
+    }
+
+
+    _handleInputChange = event =>{
+        const { target: { value, name } } = event;
+
+        this.setState({
+            [name] : value
+        })
+        console.log(this.state);
+    }
+
+    _handleSubmit = event => {
+        event.preventDefault();
+        console.log(this.state);
+    }
+
+
+
+}
+
+export default Container;
