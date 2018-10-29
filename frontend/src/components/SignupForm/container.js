@@ -6,23 +6,24 @@ class Container extends Component {
 
     state = {
         email : '',
-        fullName : '',
+        name : '',
         username : '',
         password: '',
     }
 
     //index 에 있는 것과 연결되서 쓸 수있게 prop 설정
     static propTypes = {
-        facebookLogin : PropTypes.func.isRequired
+        facebookLogin : PropTypes.func.isRequired,
+        createAccount : PropTypes.func.isRequired
     }
 
     render(){
-        const { email, fullName , username, password} = this.state;
+        const { email, name , username, password} = this.state;
         return <SignupForm 
+                    emailValue = {email}
+                    nameValue = {name} 
                     usernameValue = {username}
                     passwordValue = {password}
-                    emailValue = {email}
-                    fullNameValue = {fullName} 
                     handleInputChange = {this._handleInputChange}
                     handelSubmit = {this._handleSubmit}
                     handleFacebookLogin = {this._handleFacebookLogin}
@@ -40,8 +41,11 @@ class Container extends Component {
     }
 
     _handleSubmit = event => {
+        const{ email, name, password, username} = this.state;
+        const { createAccount } = this.props;
         event.preventDefault();
         console.log(this.state);
+        createAccount(username, password, email, name);
         
     }
 
