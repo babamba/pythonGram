@@ -2,6 +2,7 @@
 
 .navigation {
     width: 100%;
+    margin-bottom: 60px;
     @include boxBorder(no);
     display: flex;
     justify-content: center;

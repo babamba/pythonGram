@@ -16,6 +16,7 @@ ReactDOM.render(
             {/*  컴포넌트는 이제 현재 언어(영어)를 체크하는 function이 생긴거임 
                                               default 언어    없을 시 기본 언어  */}
             <I18n translations={translations} initialLang="en" fallbackLang="en">
+                {/* 컴포넌트가 location을 인지하게 해야함 */}
                 <ConnectedRouter history= { history } >
                     <App />
                 </ConnectedRouter>

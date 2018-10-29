@@ -5,6 +5,7 @@ import './styles.module.scss';
 import Footer from "components/Footer";
 import Auth from "components/Auth";
 import Navigation from 'components/Navigation';
+import Feed from "components/Feed"
 
 
 //fetch('/notifications/')
@@ -26,7 +27,7 @@ App.propTypes = {
 
 const PrivateRoutes = props => (
   <Switch>
-    <Route exact path ="/" render={() => "feed" }/>
+    <Route exact path ="/" component={Feed}/>
     <Route exact path ="/explore" render={() => "explore" }/>
   </Switch>
 );
