@@ -5,6 +5,7 @@ import createHistory from 'history/createBrowserHistory';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { i18nState } from "redux-i18n";
 import user from 'redux/modules/user';
+import photos from 'redux/modules/photos';
 // import Reactotron from "ReactotronConfig"
 
 // 이렇게 import 해도 작동은 하지만 dev 모드에서만 작동시키고 싶기때문에 
@@ -33,6 +34,7 @@ if(env === "development"){
 // state 의 리듀서들 
 const reducer = combineReducers({
     user,
+    photos,
     routing: routerReducer,
     // 언어 설정을 다른언어로 할수 있게
     i18nState
