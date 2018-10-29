@@ -4,6 +4,7 @@ import { Route, Switch } from 'react-router-dom';
 import './styles.module.scss';
 import Footer from "components/Footer";
 import Auth from "components/Auth";
+import Navigation from 'components/Navigation';
 
 
 //fetch('/notifications/')
@@ -14,6 +15,7 @@ console.log("App Presneter");
 
 const App = props => [
   // Nav,
+  props.isLoggedIn ? <Navigation key={1} /> : null,
   props.isLoggedIn ? <PrivateRoutes key={2} /> : <PublicRoutes key={2} />,// Priv : // Public 
   <Footer key={3} />
 ]
@@ -35,20 +37,5 @@ const PublicRoutes = props => (
     <Route exact path ="/forgot" render={() => "password" }/>
   </Switch>
 );
-
-
-// class App extends Component {
-//   render() {
-//     return (
-//       <div className={styles.App}>
-//         <Switch>
-//           <Route apth="/" render={() => "hello!"} />
-//           <Route apth="/login" render={() => "login!"} />
-//         </Switch>
-//         <Footer />
-//       </div>
-//     );
-//   }
-// }
 
 export default App;

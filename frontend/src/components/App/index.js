@@ -3,7 +3,7 @@ import Container from "./container"
 
 // index는 redux 작업만 한다.
 const mapStateProps = (state, ownProps) => {
-    const{ user } = state;
+    const{ user, routing: {location} } = state;
     return {
         // 새로운 props 생성 / user는 리듀서 임
         // 스토어 안에 있는 variable을 얻으려고 하는 행위 
@@ -11,7 +11,13 @@ const mapStateProps = (state, ownProps) => {
 
         // 스토어 안에 내용은 로컬스토리지 안에 'jwt' 라는게 있으면 true 없으면 false
         // 토큰을 얻었냐 없냐 차이
-        isLoggedIn : user.isLoggedIn
+        isLoggedIn : user.isLoggedIn,
+        
+        // location reducer 
+        // blocked update 버그 해결방법
+        // 앱컴포넌트가 new props의 존재를 알게됨
+        // 해당 prop가 변경되면 앱 컴포넌트가 렌더를 다시 하게됨
+        pathname : location.pathname
     };
 }
 

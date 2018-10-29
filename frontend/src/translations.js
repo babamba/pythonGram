@@ -26,6 +26,7 @@ export const translations = {
     'PROFILES': '프로필',
     'HASHTAGS': '해시태그',
     'LANGUAGE': '언어',
+    'Search' : '검색'
   },
   'options': {
   },

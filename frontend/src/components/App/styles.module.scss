@@ -4,5 +4,15 @@
 
 body {
     background-color: $bg-color;
-    font-size: -apple-system, BlinkMacSystemFont,"segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont,"segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: $normal-font-size;
+    
+}
+
+* {
+    box-sizing: border-box;
+}
+
+img {
+    max-width:100%;
 }
