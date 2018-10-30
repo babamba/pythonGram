@@ -1,7 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types"
-import PhotoActions from "../../components/PhotoActions"
 import styles from "./styles.module.scss"
+import PhotoActions from "../../components/PhotoActions"
+import PhotoComments from "../../components/PhotoComments"
+import TimeStamp from "../../components/TimeStamp"
 
 const FeedPhoto = (props, context) => {
     console.log(props)
@@ -21,6 +23,12 @@ const FeedPhoto = (props, context) => {
 
             <div>
                 <PhotoActions number = {props.like_count} />
+                <PhotoComments 
+                    caption = {props.caption}
+                    creator = {props.creator.username}
+                    comments = {props.comments}
+                />
+                <TimeStamp time={props.natural_time} />
             </div>
         </div>
     )
@@ -37,7 +45,7 @@ FeedPhoto.propTypes = {
     like_count:PropTypes.number.isRequired,
     caption:PropTypes.string.isRequired,
     // 배열안의 오브젝트 
-    commnet : PropTypes.arrayOf(
+    comments : PropTypes.arrayOf(
         PropTypes.shape({
             message : PropTypes.string.isRequired,
             creator : PropTypes.shape({
@@ -45,8 +53,8 @@ FeedPhoto.propTypes = {
                 username: PropTypes.string.isRequired
             }).isRequired,
         })
-    ),
-    created_at : PropTypes.string.isRequired
+    ).isRequired,
+    natural_time : PropTypes.string.isRequired
 }
 
 export default FeedPhoto;
