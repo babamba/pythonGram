@@ -28,7 +28,8 @@ export const translations = {
     'LANGUAGE': '언어',
     'Search' : '검색',
     'likes' : '좋아요',
-    'like' : '좋아요'
+    'like' : '좋아요',
+    'Add a Comment...' : '댓글 달기'
   },
   'options': {
   },

@@ -6,7 +6,7 @@ const TimeStamp = (props, context) => (
     <span className={styles.time}>{props.time}</span>
 );
 
-TimeStamp.PropTypes = {
+TimeStamp.propTypes = {
     time : PropTypes.string.isRequired
 };
 
