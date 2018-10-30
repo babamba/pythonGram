@@ -33,9 +33,11 @@ class Images(APIView):
         for image in my_images:
             image_list.append(image)
 
-        sorted_list = sorted(image_list, key=lambda image : image.created_at, reverse=True)
-        serializer = serializers.ImageSerializer(sorted_list, many=True)
-
+        sorted_list = sorted(
+            image_list, key=lambda image : image.created_at, reverse=True)
+        
+        serializer = serializers.ImageSerializer(
+            sorted_list, many=True)
         return Response(serializer.data)
 
     def post(self, request, format=None):

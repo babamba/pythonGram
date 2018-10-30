@@ -55,7 +55,7 @@ class InputImagaeSerializer(serializers.ModelSerializer):
             'caption',
         )
 
-class ImageSerializer(serializers.ModelSerializer, TaggitSerializer):
+class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
 
     comments = CommentSerializer(many=True)
     creator = FeedUserSerializer()
