@@ -74,7 +74,12 @@ class LikeImage(APIView):
         # 3. 유저 모델에서 해당 유저리스트의 유저 정보를 조회
         users = user_model.User.objects.filter(id__in = like_creator_ids)
 
-        serializer = user_serializers.ListUserSerializer(users, many=True)
+        serializer = user_serializers.ListUserSerializer(
+            users, 
+            many=True,
+            context={"request" : request}
+        )
+        
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
         print(users)

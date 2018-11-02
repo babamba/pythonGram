@@ -11,14 +11,26 @@ from nomadgram.images import serializers as images_serializers
 # 클래스를 지정해주고 각각에 해당하는 시리얼라이즈에 request.data를 인수로 실행하여 가공처리 
 
 class ListUserSerializer(serializers.ModelSerializer):
+         
+    following = serializers.SerializerMethodField()
+
     class Meta:
         model = user_model.User
         fields = (
             'id',
             'profile_image',
             'username',
-            'name'
+            'name',
+            'following'
         )
+    
+    def get_following(self, obj):
+            if 'request' in self.context:
+                request = self.context['request']
+
+                if obj in request.user.following.all():
+                         return True
+                return False
 
 
 
