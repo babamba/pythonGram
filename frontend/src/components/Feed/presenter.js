@@ -7,7 +7,7 @@ import FeedPhoto from "components/FeedPhoto"
 const Feed = props => {
     if(props.loading){
         return <LoadingFeed />
-    }else{
+    }else if(props.feed){
         return <RenderFeed {...props}/>
     }
 }
@@ -25,7 +25,8 @@ const RenderFeed = props => (
 )
 
 Feed.propTypes = {
-    loading : PropTypes.bool.isRequired
+    loading : PropTypes.bool.isRequired,
+    feed:PropTypes.array
 };
 
 export default Feed;
