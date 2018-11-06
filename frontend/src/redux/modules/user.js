@@ -8,6 +8,7 @@ const SET_USER_LIST = "SET_USER_LIST";
 const FOLLOW_USER = "FOLLOW_USER";
 const UNFOLLOW_USER = "UNFOLLOW_USER";
 const SET_IMAGE_LIST= "SET_IMAGE_LIST";
+const SET_NOTIFICATION_LIST = "SET_NOTIFICATION_LIST";
 
 // action creators 리덕스 state 바꿀때 사용
 
@@ -51,6 +52,13 @@ function setImageList(imageList){
     return {
         type:SET_IMAGE_LIST,
         imageList
+    }
+}
+
+function setNotifications(notifications){
+    return {
+        type:SET_NOTIFICATION_LIST,
+        notifications
     }
 }
 
@@ -261,6 +269,25 @@ function searchImages(token, searchTerm){
         .then(json => json);
 }
 
+function getNotifications() {
+    return (dispatch, getState) => {
+      const { user: { token } } = getState();
+      fetch(`/notifications/`, {
+        method: "GET",
+        headers: {
+          Authorization: `JWT ${token}`
+        }
+      })
+      .then(response => {
+          if (response.status === 401) {
+              dispatch(logout());
+          }
+          return response.json();
+      })
+      .then(json => dispatch(setNotifications(json)));
+    };
+  }
+
 // initial state
 
 const initialState = {
@@ -283,6 +310,8 @@ function reducer(state = initialState, action ){
             return applyUnfollowUser(state, action);
         case SET_IMAGE_LIST :
             return applySetImageList(state, action);
+        case SET_NOTIFICATION_LIST :
+            return applySetNotificationList(state, action);
         default:
         return state;
     }
@@ -347,6 +376,14 @@ function applySetImageList(state, action){
     }
 }
 
+function applySetNotificationList(state, action){
+    const { notifications } = action;
+    return {
+        ...state,
+        notifications
+    }
+}
+
 // exports
 
 const actionCreators = {
@@ -358,7 +395,8 @@ const actionCreators = {
     followUser,
     unfollowUser,
     getExplore,
-    searchByTerm
+    searchByTerm,
+    getNotifications
 }
 
 export { actionCreators };
