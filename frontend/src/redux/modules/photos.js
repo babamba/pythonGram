@@ -58,8 +58,10 @@ function getFeed(){
             }
             return response.json();
         })
-        .then(json => dispatch(setFeed(json))
-        )}
+        .then(json => {
+            dispatch(setFeed(json))
+        })
+    }
 }
 
 function likePhoto(photoId){

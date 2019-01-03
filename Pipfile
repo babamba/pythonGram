@@ -37,6 +37,7 @@ django-rest-auth = "*"
 django-cors-headers = "*"
 
 [dev-packages]
+pylint = "*"
 
 [requires]
 python_version = "3.6"

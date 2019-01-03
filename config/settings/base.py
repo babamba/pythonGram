@@ -82,6 +82,8 @@ DJANGO_APPS = [
 
     # Admin
     'django.contrib.admin',
+
+    
 ]
 THIRD_PARTY_APPS = [
     'crispy_forms',
@@ -96,6 +98,7 @@ THIRD_PARTY_APPS = [
     'rest_auth', # rest auth
     'rest_auth.registration', # enable registration
     'corsheaders', # To accept requests from React
+    
 ]
 LOCAL_APPS = [
     'nomadgram.users.apps.UsersConfig',
@@ -332,4 +335,12 @@ SOCIALACCOUNT_PROVIDERS = {
 
 REST_AUTH_REGISTER_SERIALIZERS = {
     'REGISTER_SERIALIZER': 'nomadgram.users.serializers.SignUpSerializer'
+}
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER' : 'nomadgram.users.serializers.UserProfileSerializer'
+}
+
+GRAPH_MODELS = {
+  'all_applications': True,
+  'group_models': True,
 }

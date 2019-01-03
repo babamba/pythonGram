@@ -64,30 +64,32 @@ function setNotifications(notifications){
 
 // API actions API부를 떄 사용
 
-function facebookLogin(access_token){
-    return function(dispatch){
-        fetch("/users/login/facebook/", {
-            method : "POST",
-            headers:{
-                "Content-Type": "application/json"
-            },
-            body : JSON.stringify({
-                //access_token: access_token
-                access_token
-            })
+function facebookLogin(access_token) {
+    return dispatch => {
+      fetch("/users/login/facebook/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+        //access_token: access_token
+          access_token
         })
+      })
         .then(response => response.json())
         .then(json => {
-             // request가 정상적으로 실행됬고 response json 안에 token이 있다
-             // json을 인수로 받아 saveToken에 함께 보내준다 (보내주면 알아서 숙숙숙)
-            if(json.token){
-                dispatch(saveToken(json.token));
-            }
+        // request가 정상적으로 실행됬고 response json 안에 token이 있다
+        // json을 인수로 받아 saveToken에 함께 보내준다 (보내주면 알아서 숙숙숙)
+          if (json.token) {
+            dispatch(saveToken(json.token));
+          }
         })
-        .catch(err => console.log(err))
+        .catch(err => console.log(err));
+    };
+  }
 
-    }
-}
+
+
 
 function usernameLogin(username, password){
     return function(dispatch){

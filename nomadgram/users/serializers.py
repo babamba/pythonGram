@@ -29,7 +29,7 @@ class ListUserSerializer(serializers.ModelSerializer):
                 request = self.context['request']
 
                 if obj in request.user.following.all():
-                         return True
+                    return True
                 return False
 
 
