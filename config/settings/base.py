@@ -86,6 +86,7 @@ DJANGO_APPS = [
     
 ]
 THIRD_PARTY_APPS = [
+    'corsheaders', # To accept requests from React
     'crispy_forms',
     'allauth',
     'allauth.account',
@@ -97,7 +98,7 @@ THIRD_PARTY_APPS = [
     'taggit_serializer', # tags serializer
     'rest_auth', # rest auth
     'rest_auth.registration', # enable registration
-    'corsheaders', # To accept requests from React
+    
     
 ]
 LOCAL_APPS = [
@@ -271,6 +272,7 @@ ACCOUNT_ADAPTER = 'nomadgram.users.adapters.AccountAdapter'
 # https://django-allauth.readthedocs.io/en/latest/configuration.html
 SOCIALACCOUNT_ADAPTER = 'nomadgram.users.adapters.SocialAccountAdapter'
 
+SOCIAL_AUTH_REDIRECT_IS_HTTPS = True
 
 # Your stuff...
 # ------------------------------------------------------------------------------
@@ -297,6 +299,10 @@ ACCOUNT_LOGOUT_ON_GET = True
 SOCIALACCOUNT_QUERY_EMAIL = True
 
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+#CORS_ORIGIN_WHITELIST = [
+#    'localhost:8000','127.0.0.1:9000'
+#]
 
 JWT_AUTH = {
     'JWT_VERIFY_EXPIRATION' : False

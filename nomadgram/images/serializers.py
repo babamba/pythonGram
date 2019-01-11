@@ -74,7 +74,8 @@ class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
                     'creator',
                     'natural_time',
                     'tags',
-                    'is_liked'
+                    'is_liked',
+                    'is_vertical'
                 )
 
 

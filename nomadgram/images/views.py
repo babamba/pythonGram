@@ -191,15 +191,26 @@ class Search(APIView):
             print(hashtags)
 
             # tags__name__in = deep relation ship 
-            images = models.Image.objects.filter(tags__name__in=hashtags).distinct()
+            images = models.Image.objects.filter(
+                tags__name__in=hashtags).distinct()
             print(images)
 
-            serializer = serializers.CountImageSerializer(images, many=True)
+            # serializer = serializers.CountImageSerializer(images, many=True)
+            # 위는 전체주소가 아닌 media주소만 보내기 때문에 전체 주소를 보내주도록 수정 
+            serializer = serializers.ImageSerializer(
+                images, many=True, context={'request' : request})
 
             return Response(data=serializer.data , status=status.HTTP_200_OK)
         
         else:
-            return Response(status=status.HTTP_204_NO_CONTENT)
+            # return Response(status=status.HTTP_204_NO_CONTENT)
+            images = models.Image.objects.all()[:20]
+            # serializer = serializers.CountImageSerializer(images, many=True)
+            serializer = serializers.ImageSerializer(
+                images, many=True, context={'request' : request})
+
+
+            return Response(data=serializer.data, status=status.HTTP_200_OK)
 
         # 포함된 글자를 검색할때는 creator__username__contain= 
         # 정확하게 검색할때는 creator__username__exact
