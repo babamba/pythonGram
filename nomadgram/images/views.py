@@ -36,7 +36,8 @@ class Images(APIView):
         sorted_list = sorted(
             image_list, key=lambda image : image.created_at, reverse=True)
         
-        serializer = serializers.ImageSerializer(sorted_list, many=True, context={'request':request})
+        serializer = serializers.ImageSerializer(
+            sorted_list, many=True, context={'request':request})
 
         return Response(serializer.data)
 
