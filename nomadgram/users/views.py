@@ -62,7 +62,7 @@ class ExploreUsers(APIView):
         return Response(data=serializer.data, status=status.HTTP_200_OK)
         
 class UnFollowUser(APIView):
-    def delete(self, request, user_id, format=None):
+    def post(self, request, user_id, format=None):
 
         user = request.user
 
@@ -94,7 +94,6 @@ class FollowUser(APIView):
 
         # 대상의 follower에 해당 유저 추가 
         user_to_follow.followers.add(user)
-
 
         # 팔로잉 상태창 위한 함수 
         notification_views.create_notification(user, user_to_follow, 'follow')
