@@ -45,7 +45,7 @@ class Images(APIView):
 
         user = request.user
 
-        serializer = serializers.InputImagaeSerializer(data=request.data)
+        serializer = serializers.InputImageSerializer(data=request.data)
 
         if serializer.is_valid():
             serializer.save(creator=user)

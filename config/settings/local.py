@@ -11,7 +11,7 @@ SECRET_KEY = env('DJANGO_SECRET_KEY', default='IMhVgoDEWCC9lDJEer3ED4wRzhKe2Ablq
 ALLOWED_HOSTS = [
     "localhost",
     "0.0.0.0",
-    "127.0.0.1",
+    "10.70.1.215",
 ]
 
 # CACHES
@@ -52,7 +52,7 @@ DEBUG_TOOLBAR_CONFIG = {
     'SHOW_TEMPLATE_CONTEXT': True,
 }
 # https://django-debug-toolbar.readthedocs.io/en/latest/installation.html#internal-ips
-INTERNAL_IPS = ['127.0.0.1', '10.0.2.2']
+INTERNAL_IPS = ['127.0.0.1', '10.0.2.2','10.70.1.215']
 
 
 # django-extensions

@@ -19,8 +19,14 @@ class FeedUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = user_model.User
         fields = (
+            'profile_image',
             'username',
-            'profile_image'
+            'name',
+            'bio',
+            'website',
+            'post_count',
+            'followers_count',
+            'following_count',
         )
 
 class CommentSerializer(serializers.ModelSerializer):
@@ -42,10 +48,11 @@ class LikeSerializer(serializers.ModelSerializer):
         model = models.Like
         fields = '__all__'
 
-class InputImagaeSerializer(serializers.ModelSerializer):
+class InputImageSerializer(serializers.ModelSerializer):
     
     # 필수가 아니어도 되도록 시리얼라이저에서 변경 가능한 방법
     # file = serializers.FileField(required=False)
+    tags = TagListSerializerField()
 
     class Meta:
         model = models.Image
@@ -53,6 +60,7 @@ class InputImagaeSerializer(serializers.ModelSerializer):
             'file',
             'location',
             'caption',
+            'tags'
         )
 
 class ImageSerializer(TaggitSerializer, serializers.ModelSerializer):
