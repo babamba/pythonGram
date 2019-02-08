@@ -34,6 +34,9 @@ class User(AbstractUser):
     followers = models.ManyToManyField("self", symmetrical=False, related_name="user_followers")
     following = models.ManyToManyField("self", blank=True, symmetrical=False, related_name="user_following")
 
+    def __str__(self):
+             return self.username
+
     @property
     def post_count(self):
         return self.images.all().count()
