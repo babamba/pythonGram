@@ -34,37 +34,36 @@ def create_notification(creator, to , notification_type, image = None, comment =
         notification_type=notification_type,
         comment=comment
     )
+    time.sleep(10)
 
-    # time.sleep(10)
+    notification.save()
 
-    # notification.save()
+    action = ''
 
-    # action = ''
+    if notification_type == 'like':
 
-    # if notification_type == 'like':
-
-    #     action = 'liked your photo'
+        action = 'liked your photo'
     
-    # elif notification_type == 'comment':
+    elif notification_type == 'comment':
 
-    #     action = 'commented on your photo'
+        action = 'commented on your photo'
     
-    # elif notification_type == 'follow':
+    elif notification_type == 'follow':
 
-    #     action = 'followed you'
+        action = 'followed you'
         
 
-    # url = "https://exp.host/--/api/v2/push/send"
-    # data = {
-    #     "to": creator.push_token,
-    #     "sound": "default",
-    #     "body": f'Somebody {action}',
-    #     "badge": 1
-    # }
-    # headers = {'Content-type': 'application/json',
-    #            'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate'}
+    url = "http://exp.host/--/api/v2/push/send"
+    data = {
+        "to": creator.push_token,
+        "sound": "default",
+        "body": f'Somebody {action}',
+        "badge": 1
+    }
+    headers = {'Content-type': 'application/json',
+               'Accept': 'application/json', 'Accept-Encoding': 'gzip, deflate'}
 
-    # request = requests.post(url, data=json.dumps(data), headers=headers)
+    request = requests.post(url, data=json.dumps(data), headers=headers)
 
-    # print(request.json())
+    print(request.json())
 

@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "/Users/starlord/.local/share/virtualenvs/nomadgram-2yIazEsS/bin/python"
+    "python.pythonPath": "/Users/jw/.local/share/virtualenvs/pythonGram-h0FdtQgB/bin/python",
+    "python.linting.pylintEnabled": true
 }

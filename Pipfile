@@ -38,6 +38,7 @@ django-cors-headers = "*"
 
 [dev-packages]
 pylint = "*"
+requests = "*"
 
 [requires]
 python_version = "3.6"

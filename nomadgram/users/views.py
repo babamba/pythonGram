@@ -258,3 +258,22 @@ class FacebookLogin(SocialLoginView):
 
         # --------------------------------------------------------------------------------
 
+class RegisterPush(APIView):
+    def post(self, request, format=None):
+        print(request)
+        user = request.user
+
+        token = request.data.get('token', None)
+        print("regist push token",token)
+
+        if token is not None:
+
+            user.push_token =  token
+
+            user.save()
+
+            return Response(status=status.HTTP_200_OK)
+
+        else:
+
+            return Response(status=status.HTTP_400_BAD_REQUEST)

@@ -1,0 +1,8 @@
+# conf.cnf
+
+[client]
+database = nomadgram
+host = hellojw.net
+user = nomadgram
+password = nomadgram20!8
+port = 3306
